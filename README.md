@@ -100,8 +100,8 @@ The mape was plotted using training dataset:
  
  # Discussion
 
- This model is plotted with inversed test dataset also:
-  ![act_covid vs pred_covid](https://user-images.githubusercontent.com/109565405/181235485-338f4b0e-2345-4241-ae86-9baa24346bff.png)
+ This model was plotted with inversed test dataset :
+![act_covid vs pred_covid](https://user-images.githubusercontent.com/109565405/181235485-338f4b0e-2345-4241-ae86-9baa24346bff.png)
 
  
 ![mape](https://user-images.githubusercontent.com/109565405/181234738-4093321d-04c3-4d5c-9a5c-35a84ef9d6dc.PNG)
