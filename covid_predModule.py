@@ -29,8 +29,8 @@ class ModelEvaluation:
 class ModelAnalysis:
     def plot_hist_graph(self,actual_covid_cases,predicted_covid_cases):
         plt.figure()
-        plt.plot(actual_covid_cases,color='red')
-        plt.plot(predicted_covid_cases,color='yellow')
+        plt.plot(actual_covid_cases,color='blue')
+        plt.plot(predicted_covid_cases,color='red')
         plt.xlabel('Act_covid_cases')
         plt.ylabel('pred_covid_cases')
         plt.legend('Actual','Predicted')

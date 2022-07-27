@@ -29,7 +29,7 @@ from covid_predModule import ModelAnalysis
 MMS_PATH= os.path.join(os.getcwd(),'model','mms_train.pkl')
 CSV_PATH = os.path.join(os.getcwd(),'dataset','cases_malaysia_train.csv')
 CSV_TEST_PATH = os.path.join(os.getcwd(),'dataset','cases_malaysia_test.csv') 
-OGS_PATH = os.path.join(os.getcwd(),'logs',datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))
+LOGS_PATH = os.path.join(os.getcwd(),'logs',datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))
 
 
 
@@ -38,6 +38,7 @@ OGS_PATH = os.path.join(os.getcwd(),'logs',datetime.datetime.now().strftime('%Y%
 
 
 df = pd.read_csv(CSV_PATH)
+df_test=pd.read_csv(CSV_TEST_PATH)
 
 #%% step 2) Data Inspection
 
@@ -81,6 +82,21 @@ eda.distplot_graph(con_col,df)
 #others factors such as cluster workplace,education_centre,
 #highrisk pop , import,community and religious.
 
+#test data
+
+#data inspection
+df_test.info()
+
+#check for missing/nan value
+df_test.isna().sum()
+# there's 1 missing value in cases_new                  
+#check for duplicated data
+df_test.duplicated().sum()
+#0 duplicated dataset
+
+
+
+
 
 #%%
 # step 3) Data Cleaning
@@ -92,6 +108,15 @@ eda.distplot_graph(con_col,df)
 # we will used interpolate method for to catter time series missing values dataset
 
 cases_new_inter= df['cases_new'].interpolate()
+
+#test data
+
+# handle missing value with interpolate method
+cases_new_test_inter= df_test['cases_new'].interpolate()
+
+cases_new_test_inter.isna().sum()
+#0 missing values in cases new
+
 
 #%%
 # step 4) Features Selection
@@ -123,61 +148,7 @@ y_train=np.array(y_train)
 #changed into 3 dim    
 X_train=np.expand_dims(X_train,axis=-1)
 
-#%% Model Development
-
-model = Sequential()
-model.add(Input(shape=(np.shape(X_train)[1],1))) # input_length # features
-model.add(LSTM(32,return_sequences=(True)))
-model.add(Dropout(0.3))
-model.add(LSTM(32))
-model.add(Dropout(0.3))
-model.add(Dense(1,activation='relu')) # Output layer
-model.summary()
-
-# Model arch
-plot_model(model,show_shapes=(True,False),show_layer_names=True)
-
-#%% Model compile
-
-model.compile(optimizer='adam',loss='mse',metrics=['mean_absolute_percentage_error'])
-
-#callbacks
-L
-tensorboard_callback=TensorBoard(log_dir=LOGS_PATH,histogram_freq=1)
-#early_callback=EarlyStopping(monitor='val_loss',patience=5)
-
-#%%
-#Model Training
-hist=model.fit(X_train,y_train,epochs=100,callbacks = [tensorboard_callback])
-#saving all the loss and hist model inside
-
-print(hist.history.keys())
-
-#%% Model Evaluation with training dataset
-
-me=ModelEvaluation()
-me.plot_hist_graph(hist)
-
-#%%
-#Model Deployement
-
-#data load
-df_test=pd.read_csv(CSV_TEST_PATH)
-#data inspection
-df_test.info()
-
-#check for missing/nan value
-df_test.isna().sum()
-# there's 1 missing value in cases_new                  
-#check for duplicated data
-df_test.duplicated().sum()
-#0 duplicated dataset
-
-# handle missing value with interpolate method
-cases_new_test_inter= df_test['cases_new'].interpolate()
-
-cases_new_test_inter.isna().sum()
-#0 missing values in cases new
+#test data
 
 #change the dim to dim3
 cases_new_test_inter = mms.transform(np.expand_dims(cases_new_test_inter,axis=-1))
@@ -193,14 +164,52 @@ for i in range(win_size,len(concat_test)):
 # convert X_test to array
 X_test = np.array(X_test)
 
+
+
+#%% Model Development
+
+model = Sequential()
+model.add(Input(shape=(np.shape(X_train)[1],1))) # input_length # features
+model.add(LSTM(32,return_sequences=(True)))
+model.add(Dropout(0.2))
+model.add(LSTM(32))
+model.add(Dropout(0.2))
+model.add(Dense(1,activation='relu')) # Output layer
+model.summary()
+
+# Model arch
+plot_model(model,show_shapes=(True,False),show_layer_names=True)
+
+#%% Model compile
+
+model.compile(optimizer='adam',loss='mse',metrics=['mean_absolute_percentage_error'])
+#callbacks
+tensorboard_callback=TensorBoard(log_dir=LOGS_PATH,histogram_freq=1)
+#early_callback=EarlyStopping(monitor='val_loss',patience=5)
+
+#%%
+#Model Training
+hist=model.fit(X_train,y_train,epochs=500,callbacks = [tensorboard_callback])
+#saving all the loss and hist model inside
+
+print(hist.history.keys())
+
+#%% Model Evaluation with training dataset
+
+me=ModelEvaluation()
+me.plot_hist_graph(hist)
+
+#%% step 5) data prepocessing
+#Model Deployement
+
 # Model predict using test dataset
 predict_cases = model.predict(np.expand_dims(X_test,axis=-1))
 
-#%% Plotting graph with scaling test dataset
+#%Plotting graph with scaling test dataset
 
 plt.figure()
-plt.plot(cases_new_test_inter,'b',label='actual_covid_cases')
-plt.plot(predict_cases,'r',label='predicted_covid_cases')
+plt.plot(cases_new_test_inter,'blue',label='actual_covid_cases')
+plt.plot(predict_cases,'red',label='predicted_covid_cases')
 plt.title('Scaled dataset')
 plt.legend()
 plt.show()
@@ -213,10 +222,9 @@ predicted_covid_cases=mms.inverse_transform(predict_cases)
 ma=ModelAnalysis()
 ma.plot_hist_graph(actual_covid_cases,predicted_covid_cases)
 
-
 print(mean_absolute_percentage_error(actual_covid_cases,predicted_covid_cases))
 
 
-#Discussion:The mape that 
+#Discussion:The mape obtained is 0.1164.
 
 
