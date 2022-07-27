@@ -62,9 +62,44 @@ From the graph, we can see that  adult cases is being impersonate by the new cas
 - tensorflow
 - sklearn
 - seaborn
+
+## Data cleaning
+Our main target of this model is: cases_new.There are missing values found in train dataset for this features: 12 missing values and test dataset: 1 missing value.
+Since this is time series dataset, the best way to catter with missing values is by interpolation method. 
+
+## Features Selection
+Since this is time series dataset, there no features need to be selected where our main focus is to predict cases_new
+
+## Data Preprocessing
+
+1. We are MinMaxScaling the interpolate cases_new for both dataset train and test by fit and transform it the interpolate cases_new of train dataset and transform the interpolate cases_new of test dataset
+2.We set the window size as 30 as per 30 days requested for the analysis
+
+## Model Development
+ We build the model by sequential approach with 2 layers, 32 nodes and dropout rate of 0.2 with epoch of 500.
  
+ The Model arch was plotted:
+![model](https://user-images.githubusercontent.com/109565405/181232244-a7b2b37c-bfda-486d-9b11-210b2367f948.png)
+
+
+the running model:
+
+
+![running model](https://user-images.githubusercontent.com/109565405/181232624-991c69e8-ac0a-4e61-a49e-ef7ab4273d2b.PNG)
+
+
+The epochs of mape and epochs loss were plotted in tensorboard:
+
+![tensorboard](https://user-images.githubusercontent.com/109565405/181232748-2c6dbb25-d378-455e-a08d-3ffb5aa8fa76.PNG)
+
+
+The mape was plotted using training dataset:
+
+![training vs validation mape train dataset](https://user-images.githubusercontent.com/109565405/181233087-1aa7cae3-460a-48da-ac57-cb3eb4a6da1c.png)
+
+
 # Discussion
-The MAPE obtained is 0.11% which more than 0.1. For the future researcher, it is recommended to reduce the layer or nodes when trained with this dataset in order to get better NN prediction model.
+The MAPE obtained is 0.11% which more than 0.1 which means the model is able to predict the new cases of covid19. For the future researcher, it is recommended to reduce the layer or nodes when trained with this dataset in order to get better NN prediction DL model.
 
 ## Credits
 Thanks to MoH-Malaysia/covid19-public: Official data on the COVID-19 for the covid dataset
