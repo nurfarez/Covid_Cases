@@ -97,9 +97,16 @@ The mape was plotted using training dataset:
 
 ![training vs validation mape train dataset](https://user-images.githubusercontent.com/109565405/181233087-1aa7cae3-460a-48da-ac57-cb3eb4a6da1c.png)
 
+ 
+ # Discussion
 
-# Discussion
-The MAPE obtained is 0.11% which more than 0.1 which means the model is able to predict the new cases of covid19. For the future researcher, it is recommended to reduce the layer or nodes when trained with this dataset in order to get better NN prediction DL model.
+ This model is plotted with inversed test dataset also:
+  ![act_covid vs pred_covid](https://user-images.githubusercontent.com/109565405/181235485-338f4b0e-2345-4241-ae86-9baa24346bff.png)
+
+ 
+![mape](https://user-images.githubusercontent.com/109565405/181234738-4093321d-04c3-4d5c-9a5c-35a84ef9d6dc.PNG)
+
+The MAPE obtained is 0.11% which more than 0.1%. This means the model is still a good model and be able to predict the new cases of covid19.However, for the future researcher, it is recommended to reduce the layer or nodes when trained with this dataset in order to get better NN prediction DL model .
 
 ## Credits
 Thanks to MoH-Malaysia/covid19-public: Official data on the COVID-19 for the covid dataset
