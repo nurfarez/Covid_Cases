@@ -1,19 +1,14 @@
-# Covid_Cases
- LSTM neural  network to predict new cases (cases_new) in Malaysia using the past 30 days of number of cases.
 
-# Heart_Disease_Pred_App
- Apps to get the probability of patients’s getting heart attack
- 
  <h1 align="center">
 
-![image](https://th.bing.com/th/id/OIP.8bTJrUZ5xQBFU4FcOjEXqgHaFN?pid=ImgDet&rs=1)
+![image](![image](https://user-images.githubusercontent.com/109565405/181224746-ed1c9aaf-b3df-4630-a128-e5acbf8843a1.png))
 <br>
 </h1>
 
 <h1 align="center">
   <br>
-Heart Disease App
-
+# Covid_Cases
+ LSTM neural  network to predict new cases (cases_new) in Malaysia using the past 30 days of number of cases.
 <br>
 
 <h4 align="center"><a>
