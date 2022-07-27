@@ -7,7 +7,7 @@
 
 <h1 align="center">
   <br>
-# Covid_Cases
+Covid_Cases
 <br>
 
 <h4 align="center"><a>
