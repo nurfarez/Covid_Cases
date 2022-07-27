@@ -1,14 +1,13 @@
 
  <h1 align="center">
 
-![image](![image](https://user-images.githubusercontent.com/109565405/181224746-ed1c9aaf-b3df-4630-a128-e5acbf8843a1.png))
+![image](https://user-images.githubusercontent.com/109565405/181225008-308e35e7-f227-4ea6-8929-e969e8bc72ca.png)
 <br>
 </h1>
 
 <h1 align="center">
   <br>
 # Covid_Cases
- LSTM neural  network to predict new cases (cases_new) in Malaysia using the past 30 days of number of cases.
 <br>
 
 <h4 align="center"><a>
